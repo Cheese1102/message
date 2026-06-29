@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For You ❤️</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    overflow:hidden;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+}
+
+@keyframes bg{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.card{
+
+    width:760px;
+    max-width:90%;
+    max-height:90vh;
+    overflow-y:auto;
+
+    background:rgba(255,255,255,.92);
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
+
+    animation:fadeIn 2s;
+
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+img{
+
+width:220px;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+margin-bottom:25px;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+h1{
+
+color:#ff4d6d;
+margin-bottom:20px;
+font-size:42px;
+
+}
+
+#text{
+
+text-align:left;
+font-size:19px;
+line-height:1.8;
+color:#444;
+white-space:pre-wrap;
+
+height:420px;
+overflow-y:auto;
+padding-right:12px;
+
+scroll-behavior:smooth;
+
+}
+
+/* Custom Scrollbar */
+
+#text::-webkit-scrollbar{
+width:8px;
+}
+
+#text::-webkit-scrollbar-track{
+background:#f3f3f3;
+border-radius:10px;
+}
+
+#text::-webkit-scrollbar-thumb{
+background:#ff9a9e;
+border-radius:10px;
+}
+
+#text::-webkit-scrollbar-thumb:hover{
+background:#ff4d6d;
+}
+
+.cursor{
+
+display:inline-block;
+width:3px;
+background:#ff4d6d;
+animation:blink .8s infinite;
+
+}
+
+@keyframes blink{
+50%{opacity:0;}
+}
+
+button{
+
+margin-top:25px;
+padding:14px 35px;
+border:none;
+border-radius:50px;
+background:#ff4d6d;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:.3s;
+
+}
+
+button:hover{
+
+transform:scale(1.08);
+
+}
+
+.heart{
+
+position:absolute;
+top:-10%;
+pointer-events:none;
+animation:fall linear infinite;
+filter:drop-shadow(0 0 8px pink);
+
+}
+
+@keyframes fall{
+
+from{
+transform:translateY(-10vh) rotate(0deg);
+opacity:1;
+}
+
+to{
+transform:translateY(120vh) rotate(360deg);
+opacity:0;
+}
+
+}
+
+#ending{
+
+display:none;
+margin-top:20px;
+font-size:26px;
+color:#ff4d6d;
+animation:fadeIn 2s;
+
+}
+
+#smashGame{
+    margin-top:30px;
+    text-align:center;
+}
+
+#person{
+    font-size:80px;
+    display:inline-block;
+    transition:transform .15s;
+    transform-origin:bottom center;
+}
+
+#hammer{
+    margin-top:20px;
+    background:#ff4d6d;
+    color:white;
+    border:none;
+    padding:12px 24px;
+    border-radius:30px;
+    cursor:pointer;
+    font-size:18px;
+}
+
+#hammer:hover{
+    transform:scale(1.08);
+}
+
+.hit{
+    animation:bonk .25s ease;
+}
+
+@keyframes bonk{
+
+0%{
+transform:scale(1) translateY(0);
+}
+
+25%{
+transform:scale(1.15,.8) translateY(8px);
+}
+
+60%{
+transform:scale(.8,1.2) translateY(20px);
+}
+
+100%{
+transform:scale(1) translateY(0);
+}
+
+}
+
+#counter{
+    margin-top:15px;
+    color:#666;
+    font-size:18px;
+}
+
+#overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.sorry{
+    position:absolute;
+    font-size:28px;
+    color:#ff4d6d;
+    font-weight:bold;
+    animation:floatUp 1.5s ease forwards;
+    white-space:nowrap;
+}
+
+@keyframes floatUp{
+    0%{
+        opacity:0;
+        transform:translateY(20px) scale(.8);
+    }
+    20%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+        transform:translateY(-120px) scale(1.3);
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<img src="photo/WhatsApp Image 2026-06-29 at 9.17.26 PM.jpeg" alt="Our Photo">
+
+<h1>For You ❤️</h1>
+
+<div id="text"></div><span class="cursor"></span>
+
+<div id="ending">
+❤️ Thank you for reading. ❤️
+</div>
+
+<button onclick="finish()">
+I've Read Everything
+</button>
+
+</div>
+
+<div id="smashGame">
+
+    <div id="person">
+        🧍
+    </div>
+
+    <button id="hammer" onclick="smash()">
+        🔨 Smash Me
+    </button>
+    
+    <div id="counter" class="hidden">
+        Bonks: <span id="count">0</span>
+    </div>
+
+</div>
+
+<div id="overlay"></div>
+<script>
+
+const letter=`Hi,
+
+If you're reading this, thank you for taking a few minutes to hear me out. I'm sorry if I've been putting so much pressure on you lately. Looking back, I realize that some of my actions may have made you feel overwhelmed, and I truly regret that. That was never what I wanted. The truth is, I care about you so much. Our relationship, our friendship, and every moment we've shared together mean more to me than you probably realize. Sometimes, when someone is important to us, we end up holding on too tightly, and I think that's what happened with me. If my words or actions ever made you feel trapped, stressed, or uncomfortable, I'm genuinely sorry. Please don't be sad because of me. Life is still very long, and there are countless beautiful memories waiting for you, so many dreams you'll achieve, and so many reasons for you to smile. I don't want to become someone who makes your world heavier. Instead, I hope I'll always be someone you can remember with a smile. No matter what happens from here, I'll always be grateful that our paths crossed. Thank you for every laugh, every conversation, and every memory. I don't expect anything after this. I just wanted you to know how much you mean to me and how truly sorry I am. Please take good care of yourself. I'll always wish you nothing but the very best.
+
+
+❤️`;
+
+const text = document.getElementById("text");
+
+let i = 0;
+
+function type(){
+
+    if(i < letter.length){
+
+        text.innerHTML += letter.charAt(i);
+
+        // Auto-scroll while typing
+        text.scrollTop = text.scrollHeight;
+
+        i++;
+
+        setTimeout(type,35);
+
+    }else{
+
+        document.querySelector(".cursor").style.display="none";
+
+    }
+
+}
+
+type();
+
+function finish(){
+
+    document.getElementById("ending").style.display="block";
+
+}
+
+for(let i=0;i<40;i++){
+
+    let heart=document.createElement("div");
+
+    heart.className="heart";
+
+    heart.innerHTML="❤️";
+
+    heart.style.left=Math.random()*100+"vw";
+
+    heart.style.fontSize=(15+Math.random()*20)+"px";
+
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+    heart.style.animationDelay=Math.random()*5+"s";
+
+    document.body.appendChild(heart);
+
+}
+
+let smashCount = 0;
+
+function smash(){
+
+    const person = document.getElementById("person");
+
+    person.classList.remove("hit");
+    void person.offsetWidth;
+    person.classList.add("hit");
+
+    smashCount++;
+    document.getElementById("count").textContent = smashCount;
+
+    showSorry(); // ✅ ADD THIS
+}
+function showSorry(){
+
+    const overlay = document.getElementById("overlay");
+
+    for(let i=0;i<8;i++){
+
+        const msg = document.createElement("div");
+
+        msg.className = "sorry";
+        msg.innerHTML = "Sorry ❤️";
+
+        msg.style.left = Math.random() * 100 + "vw";
+        msg.style.top = (50 + Math.random() * 30) + "vh";
+
+        msg.style.fontSize = (18 + Math.random() * 20) + "px";
+
+        overlay.appendChild(msg);
+
+        setTimeout(() => {
+            msg.remove();
+        }, 1500);
+
+    }
+}
+
+</script>
+
+</body>
+</html>
